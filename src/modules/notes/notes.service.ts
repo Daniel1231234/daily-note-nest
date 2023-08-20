@@ -72,7 +72,7 @@ export class NotesService {
       // If note.seenAt is null, update it with the current date and time
       const updatedNote = await this.NoteModel.findOneAndUpdate(
         { _id: noteId },
-        { seenAt: new Date() },
+        { seenAt: Date.now() },
         { new: true }, // Return the updated document
       );
       return updatedNote;
