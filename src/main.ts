@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import * as config from './config';
 
 const port = process.env.PORT || 3000;
 
@@ -20,10 +21,14 @@ function initSwagget(app: INestApplication) {
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-    cors: true,
+    cors: {
+      origin: '*', // Allow any origin
+      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    },
   });
-
-  initSwagget(app);
+  if (config.default().nodeEnvironment === 'dev') {
+    initSwagget(app);
+  }
   await app.listen(port);
 }
 bootstrap();
