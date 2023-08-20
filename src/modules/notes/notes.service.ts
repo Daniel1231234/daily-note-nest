@@ -27,8 +27,8 @@ export class NotesService {
 
   async getSeenNotes() {
     try {
-      const unseenNotes = await this.NoteModel.find({ seenAt: null });
-      return unseenNotes;
+      const seenNotes = await this.NoteModel.find({ seenAt: { $ne: null } });
+      return seenNotes;
     } catch (error) {
       throw error;
     }
