@@ -36,7 +36,7 @@ export class NotesService {
 
   async getRandomNote(): Promise<Note> {
     try {
-      const unseenNotes = await this.getSeenNotes();
+      const unseenNotes = await this.NoteModel.find({ seenAt: null });
 
       if (unseenNotes.length > 0) {
         const randomNote =
