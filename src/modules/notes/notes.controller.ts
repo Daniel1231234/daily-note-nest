@@ -86,4 +86,21 @@ export class NotesController {
       );
     }
   }
+
+  @Put('update-seen-note')
+  async UpdateSeenNote(
+    @Req() req: any,
+    @Res() res: any,
+    @Body('id') id: string,
+  ) {
+    try {
+      const data = await this.notesService.updateNote(id);
+      return res.status(200).json({ success: true, data });
+    } catch (error) {
+      throw new HttpException(
+        { success: false, message: error.message },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
 }

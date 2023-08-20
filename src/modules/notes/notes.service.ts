@@ -57,14 +57,27 @@ export class NotesService {
     }
   }
 
-  async updateNote(note: any) {
+  async updateNote(noteId: string) {
     try {
-      const res = await this.NoteModel.findOneAndUpdate(
-        { _id: note._id },
-        { ...note },
+      // Find the note by its ID and check if seenAt is not null
+      const existingNote = await this.NoteModel.findById(noteId);
+      if (!existingNote) {
+        return 'Note not found';
+      }
+
+      if (existingNote.seenAt !== null) {
+        return 'This note has already been opened before';
+      }
+
+      // If note.seenAt is null, update it with the current date and time
+      const updatedNote = await this.NoteModel.findOneAndUpdate(
+        { _id: noteId },
+        { seenAt: new Date() },
+        { new: true }, // Return the updated document
       );
-      console.log(res);
+      return updatedNote;
     } catch (error) {
+      // Handle any errors that occur
       throw error;
     }
   }
