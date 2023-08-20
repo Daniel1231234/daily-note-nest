@@ -4,7 +4,7 @@ import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { NestExpressApplication } from '@nestjs/platform-express';
 
-const port = process.env.PORT || 3030;
+const port = process.env.PORT || 3000;
 
 function initSwagget(app: INestApplication) {
   const config = new DocumentBuilder()
